@@ -24,25 +24,14 @@ package or version.
 | --- | --- | --- | --- |
 | 1.0.0 | 1 | 2026-10-17 | First TWA build. Replaces the Expo "MWP Listener" APK (`mwp-listener-v3.apk`) as the site download. |
 
-## Building
+## Building and releasing
 
-Prerequisites, all set up on Daniel's laptop on 2026-10-17:
+Full runbook, including toolchain setup from scratch, R2 upload and verification:
+**[docs/RELEASING.md](docs/RELEASING.md)**. In short: bump `appVersionCode` and
+`appVersion` in `twa-manifest.json`, run `scripts/build.sh`, upload to R2 as both
+`mwp-fm-<version>.apk` and `mwp-fm.apk`, then tag and create a GitHub release.
 
-- `@bubblewrap/cli` 1.24.1 (global npm, node v20)
-- `~/.bubblewrap/config.json` → `jdkPath` = `~/.bubblewrap/jdk/jdk-17.0.20.1+1` (Temurin 17),
-  `androidSdkPath` = `~/Development/Android/Sdk`
-- Android SDK: `cmdline-tools/latest`, `build-tools;34.0.0`, `platforms;android-35`
-
-```bash
-# 1. bump appVersionCode (+1) and appVersion in twa-manifest.json
-# 2. build
-scripts/build.sh          # → dist/mwp-fm-<version>.apk (+ app-release-bundle.aab)
-# 3. upload dist/mwp-fm-<version>.apk to R2 as mwp-fm-<version>.apk AND mwp-fm.apk
-# 4. git tag v<version>, push, create a GitHub release with the APK attached
-```
-
-Only `twa-manifest.json` is the source of truth. `bubblewrap update` regenerates `app/`,
-the Gradle files and the icons from it, so edit the manifest and do not edit `app/` by hand.
+`twa-manifest.json` is the only source of truth. Never hand-edit `app/`.
 
 ## Signing key
 
@@ -59,26 +48,10 @@ The same fingerprint is published at
 `My-Weird-Prompts` repo at `radio/.well-known/assetlinks.json`. That file proves to Chrome that the app and the site belong together.
 Without it, the app still works but shows a browser URL bar at the top.
 
-## Setup gotchas (found 2026-10-17)
+## Setup gotchas
 
-- **Bubblewrap's bundled-JDK download in March 2026 was truncated.** The
-  `~/.bubblewrap/jdk/OpenJDK17U-…tar.gz` was incomplete, so `jdk17u-jdk-17.0.11-9`
-  was a source tree, not a runnable JDK. `config.json` had been left empty, which is
-  probably why the first attempt was abandoned in favour of Expo. Fix: download
-  Temurin 17 from `api.adoptium.net` and point `jdkPath` at it.
-- **Bubblewrap rejects a standard SDK layout** with `The provided androidSdk isn't
-  correct.` `AndroidSdkTools.validatePath` requires `<sdk>/tools` or `<sdk>/bin` at
-  the SDK root. A Google-style install has `cmdline-tools/latest/bin` instead. Fix:
-  `ln -s cmdline-tools/latest/bin ~/Development/Android/Sdk/bin`.
-- **Uploading to R2:** the gateway's `cloudflare__r2_object_put` runs on residenceserver
-  and cannot read laptop paths (ENOENT), and the local `rclone` remote `r2-daniel` gets
-  403 on this bucket. What works is `cloudflare__r2_presign` (method `PUT`,
-  content_type `application/vnd.android.package-archive`) then
-  `curl -X PUT -H "Content-Type: application/vnd.android.package-archive" --upload-file <apk> "<url>"`.
-  It returned 200 even though the presigned URL carries an empty-body CRC32 parameter.
-- `bubblewrap init` is interactive. Writing `twa-manifest.json` by hand and running
-  `bubblewrap update` avoids it. Passwords are passed through
-  `BUBBLEWRAP_KEYSTORE_PASSWORD` / `BUBBLEWRAP_KEY_PASSWORD`, with stdin closed.
+See the "Gotchas" section of [docs/RELEASING.md](docs/RELEASING.md): the truncated
+Bubblewrap JDK, the SDK path check, the R2 upload route, and the non-interactive init.
 
 ## History
 
