@@ -1,0 +1,60 @@
+{
+  "packageId": "com.myweirdprompts.fm",
+  "host": "stream.myweirdprompts.com",
+  "name": "MWP FM",
+  "launcherName": "MWP FM",
+  "display": "standalone",
+  "themeColor": "#F8FAFC",
+  "themeColorDark": "#0B1220",
+  "navigationColor": "#F8FAFC",
+  "navigationColorDark": "#0B1220",
+  "navigationDividerColor": "#F8FAFC",
+  "navigationDividerColorDark": "#0B1220",
+  "backgroundColor": "#F8FAFC",
+  "enableNotifications": false,
+  "startUrl": "/",
+  "iconUrl": "https://stream.myweirdprompts.com/icons/icon-512.png",
+  "maskableIconUrl": "https://stream.myweirdprompts.com/icons/icon-maskable.png",
+  "splashScreenFadeOutDuration": 300,
+  "signingKey": {
+    "path": "/home/daniel/.config/mwp-fm-android/release.keystore",
+    "alias": "mwp-fm"
+  },
+  "appVersionCode": 1,
+  "appVersion": "1.0.0",
+  "shortcuts": [
+    {
+      "name": "Play Radio",
+      "shortName": "Radio",
+      "url": "https://stream.myweirdprompts.com/?autoplay=1",
+      "chosenIconUrl": "https://stream.myweirdprompts.com/icons/icon-192.png"
+    },
+    {
+      "name": "Latest episode",
+      "shortName": "Latest",
+      "url": "https://stream.myweirdprompts.com/?latest=1",
+      "chosenIconUrl": "https://stream.myweirdprompts.com/icons/icon-192.png"
+    },
+    {
+      "name": "Search",
+      "shortName": "Search",
+      "url": "https://stream.myweirdprompts.com/#/search",
+      "chosenIconUrl": "https://stream.myweirdprompts.com/icons/icon-192.png"
+    }
+  ],
+  "generatorApp": "bubblewrap-cli",
+  "webManifestUrl": "https://stream.myweirdprompts.com/manifest.json",
+  "fallbackType": "customtabs",
+  "enableSiteSettingsShortcut": true,
+  "isChromeOSOnly": false,
+  "isMetaQuest": false,
+  "fullScopeUrl": "https://stream.myweirdprompts.com/",
+  "minSdkVersion": 21,
+  "orientation": "portrait",
+  "fingerprints": [
+    {
+      "name": "release",
+      "value": "38:8C:2C:C1:C9:A3:1F:56:56:F0:37:02:52:0F:F0:2D:7C:14:46:83:AB:C4:8E:7B:6D:D5:D1:A4:6D:18:DA:D3"
+    }
+  ]
+}
