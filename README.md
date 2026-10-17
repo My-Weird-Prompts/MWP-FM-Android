@@ -70,6 +70,12 @@ Without it, the app still works but shows a browser URL bar at the top.
   correct.` `AndroidSdkTools.validatePath` requires `<sdk>/tools` or `<sdk>/bin` at
   the SDK root. A Google-style install has `cmdline-tools/latest/bin` instead. Fix:
   `ln -s cmdline-tools/latest/bin ~/Development/Android/Sdk/bin`.
+- **Uploading to R2:** the gateway's `cloudflare__r2_object_put` runs on residenceserver
+  and cannot read laptop paths (ENOENT), and the local `rclone` remote `r2-daniel` gets
+  403 on this bucket. What works is `cloudflare__r2_presign` (method `PUT`,
+  content_type `application/vnd.android.package-archive`) then
+  `curl -X PUT -H "Content-Type: application/vnd.android.package-archive" --upload-file <apk> "<url>"`.
+  It returned 200 even though the presigned URL carries an empty-body CRC32 parameter.
 - `bubblewrap init` is interactive. Writing `twa-manifest.json` by hand and running
   `bubblewrap update` avoids it. Passwords are passed through
   `BUBBLEWRAP_KEYSTORE_PASSWORD` / `BUBBLEWRAP_KEY_PASSWORD`, with stdin closed.
