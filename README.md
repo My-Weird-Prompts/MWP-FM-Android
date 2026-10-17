@@ -1,12 +1,12 @@
 # MWP FM — Android
 
 Sideloadable Android app for [MWP FM](https://stream.myweirdprompts.com), the
-My Weird Prompts streaming PWA (source: `danielrosehill/mwp-radio`).
+My Weird Prompts streaming PWA (source: `radio/` in `danielrosehill/My-Weird-Prompts`. The Vercel project `mwp-radio` builds from that folder. The standalone `danielrosehill/mwp-radio` repo is stale and is **not** deployed).
 
 It is a **Trusted Web Activity (TWA)** generated with
 [Bubblewrap](https://github.com/GoogleChromeLabs/bubblewrap): a thin Android shell that
 opens `https://stream.myweirdprompts.com/` full-screen in Chrome. The app has no copy of
-the web code, so **every web deploy of mwp-radio reaches the app with no rebuild.** You
+the web code, so **every web deploy of the radio app reaches the app with no rebuild.** You
 only need a new APK to change the shell itself: name, icons, colours, shortcuts,
 package or version.
 
@@ -56,7 +56,7 @@ first, and you would also have to change `assetlinks.json`.
 
 The same fingerprint is published at
 `https://stream.myweirdprompts.com/.well-known/assetlinks.json`, which is in the
-mwp-radio repo. That file proves to Chrome that the app and the site belong together.
+`My-Weird-Prompts` repo at `radio/.well-known/assetlinks.json`. That file proves to Chrome that the app and the site belong together.
 Without it, the app still works but shows a browser URL bar at the top.
 
 ## Setup gotchas (found 2026-10-17)
@@ -85,7 +85,7 @@ Without it, the app still works but shows a browser URL bar at the top.
 The earlier Android app was a separate React Native/Expo codebase, built with EAS cloud
 builds: `danielrosehill/MWP-Android-APK`, published as `mwp-listener-v2/v3.apk`. It
 stopped being developed in April 2026, while the PWA kept improving. The decision
-record `mwp-radio/planning/decisions/003-pwa-vs-native-apk.md` names TWA as the path
+record `My-Weird-Prompts/radio/planning/decisions/003-pwa-vs-native-apk.md` names TWA as the path
 for an APK without a rewrite. The TWA does not give the PWA's limits a native fix
 (background audio on aggressive OEMs, no Android Auto). The Expo route remains the
 path if those become requirements.
