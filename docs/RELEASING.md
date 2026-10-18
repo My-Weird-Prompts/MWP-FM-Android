@@ -25,7 +25,7 @@ Chrome and contains none of the web code.
 | Digital Asset Links | `My-Weird-Prompts/radio/.well-known/assetlinks.json`, served at `https://stream.myweirdprompts.com/.well-known/assetlinks.json` |
 | Signing key | `~/.config/mwp-fm-android/release.keystore`, alias `mwp-fm`. The password is in `keystore-password` beside it; the store and key passwords are the same. |
 | Public download | R2 bucket `mwp-public-files-other`, which is served at `https://ai-files.myweirdprompts.com/`. Keys: `mwp-fm.apk` (latest) and `mwp-fm-<version>.apk`. |
-| Site links | `My-Weird-Prompts/website/src/components/Header.astro` (Subscribe menu "Android App") and `website/src/pages/subscribe/listen.astro` ("MWP FM (Android)"). Both point at `mwp-fm.apk`, so a normal release does not touch them. |
+| Site links | `My-Weird-Prompts/website/src/components/Header.astro` (Subscribe menu "Android App"), `website/src/pages/subscribe/listen.astro` ("MWP FM (Android)"), `website/src/pages/app.astro` (`APK_URL`), the `/apk` redirect in `website/vercel.json`, and `radio/js/views.js` `renderAbout()` (shown only to Android browsers outside standalone mode). All point at `mwp-fm.apk`, so a normal release does not touch them. |
 | GitHub release | `My-Weird-Prompts/MWP-FM-Android` (private), tag `v<version>`, APK attached |
 
 ## 1. Toolchain (one-off per machine)

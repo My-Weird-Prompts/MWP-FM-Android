@@ -16,13 +16,31 @@ package or version.
 | Download (always latest) | <https://ai-files.myweirdprompts.com/mwp-fm.apk> |
 | Versioned copies | `https://ai-files.myweirdprompts.com/mwp-fm-<version>.apk` |
 | R2 bucket | `mwp-public-files-other` (served as `ai-files.myweirdprompts.com`) |
-| Linked from | myweirdprompts.com header "Android App" + `/subscribe/listen` |
+| Linked from | myweirdprompts.com header "Android App", `/subscribe/listen`, `/app` (hero button + `#android` card), MWP FM About screen (Android browsers only) |
+| Short links | `myweirdprompts.com/apk` → the APK; `myweirdprompts.com/android` → `/app#android` (both in `website/vercel.json`) |
 
 ## Releases
 
 | Version | Code | Date | Notes |
 | --- | --- | --- | --- |
 | 1.0.0 | 1 | 2026-10-17 | First TWA build. Replaces the Expo "MWP Listener" APK (`mwp-listener-v3.apk`) as the site download. |
+
+## App stores (checked 2026-10-18)
+
+- **F-Droid main repo**: not viable as-is. It builds from public FOSS source and signs
+  with F-Droid's own key, and this repo is private with no licence. An F-Droid-signed
+  build would also need its fingerprint added to `assetlinks.json` and could not
+  upgrade over our signed APK.
+- **IzzyOnDroid**: its [App Inclusion Policy](https://izzyondroid.org/docs/general/AppInclusionPolicy/)
+  lists "apps which are only launching a website inside a webview" (no added value over a
+  bookmark) as excluded. A TWA is exactly that, so expect a rejection. This was not tested.
+- **Viable without anyone's approval**: a self-hosted F-Droid repo (built with
+  `fdroidserver`, index on R2), which users add in F-Droid, Droid-ify or Neo Store, and
+  [Obtainium](https://obtainium.imranr.dev/) tracking GitHub releases. Obtainium needs this
+  repo to be public.
+
+Most updates need no reinstall in any case, because web deploys reach the app directly
+(see above).
 
 ## Building and releasing
 
