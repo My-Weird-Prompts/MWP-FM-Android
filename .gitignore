@@ -7,3 +7,7 @@ local.properties
 *.idsig
 *.keystore
 *.jks
+fdroid/repo/
+fdroid/archive/
+fdroid/tmp/
+fdroid/srclibs/

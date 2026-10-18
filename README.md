@@ -14,6 +14,9 @@ package or version.
 | --- | --- |
 | Package | `com.myweirdprompts.fm` |
 | Download (always latest) | <https://ai-files.myweirdprompts.com/mwp-fm.apk> |
+| F-Droid repo | `https://ai-files.myweirdprompts.com/fdroid/repo`, fingerprint `9EF8AA135BECA4F168B4DB56F34875B31C41425C8D2A0B054F784DE20C1D53E3`. Runbook: [docs/FDROID.md](docs/FDROID.md) |
+| Obtainium | Add `https://github.com/My-Weird-Prompts/MWP-FM-Android` (tracks GitHub releases) |
+| Licence | Apache-2.0 (the Bubblewrap template is Apache-2.0) |
 | Versioned copies | `https://ai-files.myweirdprompts.com/mwp-fm-<version>.apk` |
 | R2 bucket | `mwp-public-files-other` (served as `ai-files.myweirdprompts.com`) |
 | Linked from | myweirdprompts.com header "Android App", `/subscribe/listen`, `/app` (hero button + `#android` card), MWP FM About screen (Android browsers only) |
@@ -25,29 +28,27 @@ package or version.
 | --- | --- | --- | --- |
 | 1.0.0 | 1 | 2026-10-17 | First TWA build. Replaces the Expo "MWP Listener" APK (`mwp-listener-v3.apk`) as the site download. |
 
-## App stores (checked 2026-10-18)
+## Update channels
 
-- **F-Droid main repo**: not viable as-is. It builds from public FOSS source and signs
-  with F-Droid's own key, and this repo is private with no licence. An F-Droid-signed
-  build would also need its fingerprint added to `assetlinks.json` and could not
-  upgrade over our signed APK.
-- **IzzyOnDroid**: its [App Inclusion Policy](https://izzyondroid.org/docs/general/AppInclusionPolicy/)
-  lists "apps which are only launching a website inside a webview" (no added value over a
-  bookmark) as excluded. A TWA is exactly that, so expect a rejection. This was not tested.
-- **Viable without anyone's approval**: a self-hosted F-Droid repo (built with
-  `fdroidserver`, index on R2), which users add in F-Droid, Droid-ify or Neo Store, and
-  [Obtainium](https://obtainium.imranr.dev/) tracking GitHub releases. Obtainium needs this
-  repo to be public.
+Most updates need no reinstall, because web deploys reach the app directly. For shell
+releases, users can choose:
 
-Most updates need no reinstall in any case, because web deploys reach the app directly
-(see above).
+- the **self-hosted F-Droid repo** (auto-updates in F-Droid, Droid-ify or Neo Store).
+  See [docs/FDROID.md](docs/FDROID.md), which also explains why it is not in the main
+  F-Droid repo or IzzyOnDroid.
+- **Obtainium**, pointed at this repo's GitHub releases.
+- a manual download of `mwp-fm.apk`.
+
+All three carry the same release-signed APK, so a user can switch between them without
+reinstalling.
 
 ## Building and releasing
 
 Full runbook, including toolchain setup from scratch, R2 upload and verification:
 **[docs/RELEASING.md](docs/RELEASING.md)**. In short: bump `appVersionCode` and
 `appVersion` in `twa-manifest.json`, run `scripts/build.sh`, upload to R2 as both
-`mwp-fm-<version>.apk` and `mwp-fm.apk`, then tag and create a GitHub release.
+`mwp-fm-<version>.apk` and `mwp-fm.apk`, then tag and create a GitHub release, then run
+`scripts/fdroid-publish.sh`.
 
 `twa-manifest.json` is the only source of truth. Never hand-edit `app/`.
 

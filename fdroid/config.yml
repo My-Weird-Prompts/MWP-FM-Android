@@ -1,0 +1,21 @@
+# fdroidserver config for the self-hosted MWP FM F-Droid repo.
+# Runbook: ../docs/FDROID.md. Run fdroid via ../scripts/fdroid-publish.sh, which sets the env vars below.
+sdk_path: $ANDROID_HOME
+
+repo_url: https://ai-files.myweirdprompts.com/fdroid/repo
+repo_name: My Weird Prompts
+repo_description: >-
+  Official F-Droid repository for MWP FM, the My Weird Prompts podcast player.
+  Add it once and your F-Droid client keeps the app up to date.
+  https://myweirdprompts.com/app
+repo_icon: icon.png  # fdroid/icon.png (cwd), NOT repo/icons/ despite the warning text; copied into repo/icons on update
+
+# Index signing key. Kept off git alongside the APK release key.
+keystore: /home/daniel/.config/mwp-fm-android/fdroid-repo.keystore
+repo_keyalias: mwp-fm-fdroid-repo
+keystorepass: {env: FDROID_REPO_KEY_PASS}
+keypass: {env: FDROID_REPO_KEY_PASS}
+keydname: CN=mwp-fm-fdroid-repo, OU=F-Droid
+
+# Keep the last 3 versions in repo/; older ones move to archive/.
+archive_older: 3

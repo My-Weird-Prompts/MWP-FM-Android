@@ -26,7 +26,7 @@ Chrome and contains none of the web code.
 | Signing key | `~/.config/mwp-fm-android/release.keystore`, alias `mwp-fm`. The password is in `keystore-password` beside it; the store and key passwords are the same. |
 | Public download | R2 bucket `mwp-public-files-other`, which is served at `https://ai-files.myweirdprompts.com/`. Keys: `mwp-fm.apk` (latest) and `mwp-fm-<version>.apk`. |
 | Site links | `My-Weird-Prompts/website/src/components/Header.astro` (Subscribe menu "Android App"), `website/src/pages/subscribe/listen.astro` ("MWP FM (Android)"), `website/src/pages/app.astro` (`APK_URL`), the `/apk` redirect in `website/vercel.json`, and `radio/js/views.js` `renderAbout()` (shown only to Android browsers outside standalone mode). All point at `mwp-fm.apk`, so a normal release does not touch them. |
-| GitHub release | `My-Weird-Prompts/MWP-FM-Android` (private), tag `v<version>`, APK attached |
+| GitHub release | `My-Weird-Prompts/MWP-FM-Android` (public since 2026-10-18), tag `v<version>`, APK attached |
 
 ## 1. Toolchain (one-off per machine)
 
@@ -129,6 +129,16 @@ git push
 git tag v<version> && git push origin v<version>
 gh release create v<version> dist/mwp-fm-<version>.apk --title "MWP FM <version>" --notes "<what changed>"
 ```
+
+## 5b. Publish to the F-Droid repo
+
+```bash
+scripts/fdroid-publish.sh
+```
+
+This adds the APK to `https://ai-files.myweirdprompts.com/fdroid/repo` and re-signs the
+index. Details and verification: [FDROID.md](FDROID.md). Obtainium users get the
+release from the GitHub release created in step 5, so they need no extra step.
 
 ## 6. Verify the full-screen link (only when package or key changed, or on first release)
 
