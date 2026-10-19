@@ -36,7 +36,7 @@ releases, users can choose:
 - the **self-hosted F-Droid repo** (auto-updates in F-Droid, Droid-ify or Neo Store).
   See [docs/FDROID.md](docs/FDROID.md), which also explains why it is not in the main
   F-Droid repo or IzzyOnDroid.
-- **Obtainium**, pointed at this repo's GitHub releases.
+- **Obtainium**, pointed at this repo's GitHub releases. It works, but the website deliberately does not mention it (Daniel's call, 2026-10-20): the site offers F-Droid (recommended) and the APK only.
 - a manual download of `mwp-fm.apk`.
 
 All three carry the same release-signed APK, so a user can switch between them without
