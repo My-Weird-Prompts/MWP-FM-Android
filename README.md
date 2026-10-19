@@ -14,7 +14,7 @@ package or version.
 | --- | --- |
 | Package | `com.myweirdprompts.fm` |
 | Download (always latest) | <https://ai-files.myweirdprompts.com/mwp-fm.apk> |
-| F-Droid repo | `https://ai-files.myweirdprompts.com/fdroid/repo`, fingerprint `9EF8AA135BECA4F168B4DB56F34875B31C41425C8D2A0B054F784DE20C1D53E3`. Run from [My-Weird-Prompts/fdroid](https://github.com/My-Weird-Prompts/fdroid); see [docs/FDROID.md](docs/FDROID.md) |
+| F-Droid repo | `https://cdn.myweirdprompts.com/fdroid/repo`, fingerprint `9EF8AA135BECA4F168B4DB56F34875B31C41425C8D2A0B054F784DE20C1D53E3`. Run from [My-Weird-Prompts/fdroid](https://github.com/My-Weird-Prompts/fdroid); see [docs/FDROID.md](docs/FDROID.md) |
 | Obtainium | Add `https://github.com/My-Weird-Prompts/MWP-FM-Android` (tracks GitHub releases) |
 | Licence | Apache-2.0 (the Bubblewrap template is Apache-2.0) |
 | Versioned copies | `https://ai-files.myweirdprompts.com/mwp-fm-<version>.apk` |

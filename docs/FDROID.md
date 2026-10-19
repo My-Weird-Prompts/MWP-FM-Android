@@ -6,7 +6,7 @@ installs and updates the app like any store app.
 
 | | |
 | --- | --- |
-| Repo URL | `https://ai-files.myweirdprompts.com/fdroid/repo` |
+| Repo URL | `https://cdn.myweirdprompts.com/fdroid/repo` |
 | Index signing fingerprint (SHA-256) | `9EF8AA135BECA4F168B4DB56F34875B31C41425C8D2A0B054F784DE20C1D53E3` |
 | Short link | `myweirdprompts.com/fdroid` |
 | Repo, CI, config, metadata, key handling | [My-Weird-Prompts/fdroid](https://github.com/My-Weird-Prompts/fdroid) |
@@ -17,7 +17,9 @@ So the GitHub release in [RELEASING.md](RELEASING.md) step 5 is the publish step
 
 History: from 2026-10-18 to 2026-10-20 the repo was built by hand from `fdroid/` and
 `scripts/fdroid-publish.sh` in this repo. Both were removed when it moved to
-My-Weird-Prompts/fdroid on CI, with the same URL and index key.
+My-Weird-Prompts/fdroid on CI, with the same URL and index key. Later on 2026-10-20 the
+repo moved from `ai-files.myweirdprompts.com` to `cdn.myweirdprompts.com` (same key and
+fingerprint). The old address is kept as a synced mirror.
 
 ## Why self-hosted rather than a store
 
