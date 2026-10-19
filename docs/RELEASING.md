@@ -24,7 +24,7 @@ Chrome and contains none of the web code.
 | Web app source | `radio/` in `danielrosehill/My-Weird-Prompts`, deployed by the Vercel project `mwp-radio` to `stream.myweirdprompts.com`. The standalone `danielrosehill/mwp-radio` repo is stale; its builds are skipped by the ignore step. |
 | Digital Asset Links | `My-Weird-Prompts/radio/.well-known/assetlinks.json`, served at `https://stream.myweirdprompts.com/.well-known/assetlinks.json` |
 | Signing key | `~/.config/mwp-fm-android/release.keystore`, alias `mwp-fm`. The password is in `keystore-password` beside it; the store and key passwords are the same. |
-| Public download | R2 bucket `mwp-public-files-other`, which is served at `https://ai-files.myweirdprompts.com/`. Keys: `mwp-fm.apk` (latest) and `mwp-fm-<version>.apk`. |
+| Public download | R2 bucket `mwppublic`, which is served at `https://cdn.myweirdprompts.com/`. Keys: `mwp-fm.apk` (latest) and `mwp-fm-<version>.apk`. Until 2026-10-20 this was `mwp-public-files-other` (`ai-files.myweirdprompts.com`); v1.0.0 is still there for old links, but new releases go to `mwppublic` only. |
 | Site links | `My-Weird-Prompts/website/src/components/Header.astro` (Subscribe menu "Android App"), `website/src/pages/subscribe/listen.astro` ("MWP FM (Android)"), `website/src/pages/app.astro` (`APK_URL`), the `/apk` redirect in `website/vercel.json`, and `radio/js/views.js` `renderAbout()` (shown only to Android browsers outside standalone mode). All point at `mwp-fm.apk`, so a normal release does not touch them. |
 | GitHub release | `My-Weird-Prompts/MWP-FM-Android` (public since 2026-10-18), tag `v<version>`, APK attached |
 
@@ -94,7 +94,21 @@ once Gradle is cached.
 
 Use both keys: the versioned one and the `mwp-fm.apk` alias.
 
-Neither direct route works:
+Simplest route, verified 2026-10-20: the account-wide R2 key in
+`My-Weird-Prompts/.env.production` (`CF_R2_KEY_ID` / `CF_R2_ACCESS_KEY`) can write to
+`mwppublic`:
+
+```bash
+set -a; . ~/repos/github/mwp-podcast/My-Weird-Prompts/.env.production; set +a
+export AWS_ACCESS_KEY_ID=$CF_R2_KEY_ID AWS_SECRET_ACCESS_KEY=$CF_R2_ACCESS_KEY AWS_DEFAULT_REGION=auto
+for k in mwp-fm-<version>.apk mwp-fm.apk; do
+  aws s3 cp dist/mwp-fm-<version>.apk s3://mwppublic/$k \
+    --endpoint-url https://$CLOUDFLARE_ACCOUNT_ID.r2.cloudflarestorage.com \
+    --content-type application/vnd.android.package-archive
+done
+```
+
+Fallback if that key stops working. Two other routes do not work:
 
 - `mcp__gateway__cloudflare__r2_object_put` with `source_path` runs on residenceserver
   and cannot see laptop files (ENOENT).
@@ -102,7 +116,7 @@ Neither direct route works:
 
 What works is a presigned PUT from the gateway, then curl from the laptop:
 
-1. `mcp__gateway__cloudflare__r2_presign` with bucket `mwp-public-files-other`, key
+1. `mcp__gateway__cloudflare__r2_presign` with bucket `mwppublic`, key
    `mwp-fm-<version>.apk`, method `PUT`, expires_in `900`, content_type
    `application/vnd.android.package-archive`.
 2. `curl -X PUT -H "Content-Type: application/vnd.android.package-archive" --upload-file dist/mwp-fm-<version>.apk "<url>"`
@@ -116,8 +130,8 @@ because Cloudflare fronts the domain:
 ```bash
 sha256sum dist/mwp-fm-<version>.apk
 for k in mwp-fm.apk mwp-fm-<version>.apk; do
-  curl -s "https://ai-files.myweirdprompts.com/$k?v=$RANDOM" | sha256sum
-  curl -sI "https://ai-files.myweirdprompts.com/$k" | grep -i content-type   # application/vnd.android.package-archive
+  curl -s "https://cdn.myweirdprompts.com/$k?v=$RANDOM" | sha256sum
+  curl -sI "https://cdn.myweirdprompts.com/$k" | grep -i content-type   # application/vnd.android.package-archive
 done
 ```
 
@@ -157,7 +171,7 @@ fingerprint or package changed.
 
 ## 7. Device check (manual, by Daniel)
 
-Sideload `https://ai-files.myweirdprompts.com/mwp-fm.apk` over the existing install. It
+Sideload `https://cdn.myweirdprompts.com/mwp-fm.apk` over the existing install. It
 should upgrade in place with no uninstall, and open full-screen with no URL bar. Check
 that playback continues with the screen off. v1.0.0 was **not** device-tested at
 release time.
