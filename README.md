@@ -19,8 +19,8 @@ package or version.
 | Licence | Apache-2.0 (the Bubblewrap template is Apache-2.0) |
 | Versioned copies | `https://ai-files.myweirdprompts.com/mwp-fm-<version>.apk` |
 | R2 bucket | `mwp-public-files-other` (served as `ai-files.myweirdprompts.com`) |
-| Linked from | myweirdprompts.com header "Android App", `/subscribe/listen`, `/app` (hero button + `#android` card), MWP FM About screen (Android browsers only) |
-| Short links | `myweirdprompts.com/apk` → the APK; `myweirdprompts.com/android` → `/app#android` (both in `website/vercel.json`) |
+| Linked from | F-Droid is the recommended path on the site (since 2026-10-20): header "Android App" → `/app#android`; `/app` hero and `#android` card lead with F-Droid and keep the APK as fallback; `/subscribe/listen` and the MWP FM About screen (Android browsers only) → `/app/fdroid` |
+| Short links | `myweirdprompts.com/apk` → the APK; `myweirdprompts.com/android` → `/app#android`; `myweirdprompts.com/fdroid` → `/app/fdroid` (setup guide) (both in `website/vercel.json`) |
 
 ## Releases
 
