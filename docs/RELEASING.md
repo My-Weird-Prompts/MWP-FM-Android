@@ -132,13 +132,17 @@ gh release create v<version> dist/mwp-fm-<version>.apk --title "MWP FM <version>
 
 ## 5b. Publish to the F-Droid repo
 
+Nothing to run. The F-Droid repo lives in
+[My-Weird-Prompts/fdroid](https://github.com/My-Weird-Prompts/fdroid); its CI checks this
+repo's GitHub releases hourly and indexes the APK attached to the newest one. To publish
+at once rather than within the hour:
+
 ```bash
-scripts/fdroid-publish.sh
+gh workflow run publish.yml -R My-Weird-Prompts/fdroid
 ```
 
-This adds the APK to `https://ai-files.myweirdprompts.com/fdroid/repo` and re-signs the
-index. Details and verification: [FDROID.md](FDROID.md). Obtainium users get the
-release from the GitHub release created in step 5, so they need no extra step.
+Details: [FDROID.md](FDROID.md). Obtainium users also get the release from the GitHub
+release created in step 5.
 
 ## 6. Verify the full-screen link (only when package or key changed, or on first release)
 
